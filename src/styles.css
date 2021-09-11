@@ -1,0 +1,27 @@
+.App {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-family: sans-serif;
+  text-align: center;
+}
+
+.dropzone {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 3px dotted black;
+  border-radius: 15px;
+  height: 100px;
+  width: 200px;
+}
+
+.dropzone-true {
+  border: 1px solid green;
+  background-color: rgb(131, 221, 131);
+}
+
+.dropzone-false {
+  background-color: rgb(219, 208, 208);
+}
