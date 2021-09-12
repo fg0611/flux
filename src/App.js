@@ -1,12 +1,18 @@
 import React from "react";
 import { parse } from "papaparse";
+import { CSVLink } from "react-csv";
+import SaveTxt from "./SaveTxt";
 import toCsv from "./toCsv";
 import toTxt from "./toTxt";
 import "./styles.css";
 
 export default function App() {
   const [highlighted, setHighlighted] = React.useState(false);
-  const [fileData, setFileData] = React.useState([]);
+  const initialFileData = {
+    type: null,
+    content: null
+  };
+  const [fileData, setFileData] = React.useState(initialFileData);
 
   return (
     <div className="App">
@@ -34,14 +40,16 @@ export default function App() {
             if (type === "application/vnd.ms-excel") {
               const { data } = parse(text, { header: true });
               console.log(data);
-              let txtData = toTxt(data);
-              console.log(txtData);
+              let txtData = await toTxt(data);
+              setFileData({ type: "txt", content: txtData });
+              console.log(fileData);
             }
             if (type === "text/plain") {
               const { data } = parse(text, { header: false });
               console.log(data);
-              let csvData = toCsv(data);
-              console.log(csvData);
+              let csvData = await toCsv(data);
+              setFileData({ type: "csv", content: csvData });
+              console.log(fileData);
             }
           }
           handle();
@@ -49,6 +57,27 @@ export default function App() {
       >
         <p>Drop csv/txt file Here</p>
       </div>
+      {fileData.type === "csv" && (
+        <div>
+          <CSVLink data={fileData.content.content}>
+            <button
+              className="btn-dw"
+              onClick={() => setFileData({ ...fileData, type: "" })}
+            >
+              Download CSV
+            </button>
+          </CSVLink>
+        </div>
+      )}
+      {fileData.type === "txt" && (
+        <div>
+          <SaveTxt
+            list={fileData.content}
+            setFileData={setFileData}
+            fileData={fileData}
+          ></SaveTxt>
+        </div>
+      )}
     </div>
   );
 }

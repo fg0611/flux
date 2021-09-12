@@ -6,7 +6,9 @@ export default function toCsv(txt) {
     data[0].slice(1, 3) + "/" + data[0].slice(3, 5) + "/" + data[0].slice(5);
   let innerData = data.slice(1, len - 1);
   let content = [
-    "type,amount,date,time,externalId,authorization,store,terminal,cashback,cashout"
+    [
+      "type,amount,date,time,externalId,authorization,store,terminal,cashback,cashout"
+    ]
   ];
 
   for (let line of innerData) {
@@ -77,7 +79,7 @@ export default function toCsv(txt) {
       toPush = toPush.concat(",0");
     }
     /* Push Line */
-    content.push(toPush);
+    content.push([toPush]);
     // console.log(toPush);
   }
   let result = {

@@ -25,3 +25,25 @@
 .dropzone-false {
   background-color: rgb(219, 208, 208);
 }
+
+.btn-dw {
+  margin-top: 15px;
+  border: 3px solid green;
+  background-color: rgb(46, 124, 46);
+  color: white;
+  border-radius: 15px;
+  font-size: 16px;
+  max-height: 60px;
+  max-width: 200px;
+}
+
+.btn-dw:hover {
+  margin-top: 15px;
+  border: 3px solid rgb(27, 83, 27);
+  background-color: rgb(17, 66, 17);
+  color: white;
+  border-radius: 15px;
+  font-size: 16px;
+  max-height: 60px;
+  max-width: 200px;
+}
