@@ -4,6 +4,10 @@ export default function toTxt(csv) {
   let firstLine = csv?.length ? "H" + csv[0].date.replace(/[/]/g, "") : null;
   let result = [firstLine];
   let total = 0;
+  csv = csv.filter((e) => e.type !== "");
+  csv = csv.sort(
+    (a, b) => a.time.replace(/[:]/g, "") - b.time.replace(/[:]/g, "")
+  );
   for (let obj of csv) {
     let str = "";
     /* TOTAL */
@@ -22,7 +26,7 @@ export default function toTxt(csv) {
       total -= parseFloat(obj.amount);
     }
     /* AMOUNT */
-    let amount = obj.amount.replace(".", "");
+    let amount = obj.amount.replace(/[.]/g, "");
     let zerosBeforeAmount = "";
     let amountSize = 12 - amount.length;
     for (let i = 0; i < amountSize; i++) {
