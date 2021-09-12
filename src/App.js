@@ -36,9 +36,13 @@ export default function App() {
           const file = e.dataTransfer.files[0];
           const type = e.dataTransfer.files[0].type;
           async function handle() {
-            const text = await file.text();
+            const text = await (await file.text()).replace(/["]/g, "");
+            console.log("VAR TEXT", text);
             if (type === "application/vnd.ms-excel") {
-              const { data } = parse(text, { header: true });
+              const { data } = await parse(text, {
+                header: true,
+                delimeter: ","
+              });
               console.log(data);
               let txtData = await toTxt(data);
               setFileData({ type: "txt", content: txtData });
@@ -59,7 +63,7 @@ export default function App() {
       </div>
       {fileData.type === "csv" && (
         <div>
-          <CSVLink data={fileData.content.content}>
+          <CSVLink data={fileData.content.content} enclosingCharacter={``}>
             <button
               className="btn-dw"
               onClick={() => setFileData({ ...fileData, type: "" })}

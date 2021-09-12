@@ -1,14 +1,16 @@
 export default function toTxt(csv) {
   // Doubts:
   // Should i check if DATES are the same in all the Objects?
-  let firstLine = csv?.length ? "H" + csv[0].date.replace(/[/]/g, "") : null;
-  let result = [firstLine];
   let total = 0;
-  csv = csv.filter((e) => e.type !== "");
-  csv = csv.sort(
+  let csvData = csv.filter((e) => e.type !== "");
+  csvData = csvData.sort(
     (a, b) => a.time.replace(/[:]/g, "") - b.time.replace(/[:]/g, "")
   );
-  for (let obj of csv) {
+  let firstLine = csvData?.length
+    ? "H" + csvData[0].date.replace(/[/]/g, "")
+    : null;
+  let result = [firstLine];
+  for (let obj of csvData) {
     let str = "";
     /* TOTAL */
 
@@ -78,7 +80,8 @@ export default function toTxt(csv) {
     str = str.concat(zerosBeforeCashout + cashout);
     result.push(str);
   }
-  let nOps = "".padStart(6 - csv.length.toString().length, 0) + csv.length;
+  let nOps =
+    "".padStart(6 - csvData.length.toString().length, 0) + csvData.length;
   let totalStr = total.toFixed(2).toString().replace(".", "");
   let qty = "".padStart(15 - totalStr.length, 0) + totalStr;
   let lastLine = "F" + nOps + qty;

@@ -7,7 +7,16 @@ export default function toCsv(txt) {
   let innerData = data.slice(1, len - 1);
   let content = [
     [
-      "type,amount,date,time,externalId,authorization,store,terminal,cashback,cashout"
+      "type",
+      "amount",
+      "date",
+      "time",
+      "externalId",
+      "authorization",
+      "store",
+      "terminal",
+      "cashback",
+      "cashout"
     ]
   ];
 
@@ -57,7 +66,7 @@ export default function toCsv(txt) {
     /* CASHBACK */
     let rawCashback = Number(line.slice(87, 97)).toString();
     let cashback;
-    if (rawCashback != 0) {
+    if (rawCashback !== 0) {
       cashback =
         rawCashback.slice(0, rawCashback.length - 2) +
         "." +
@@ -69,7 +78,7 @@ export default function toCsv(txt) {
     /* CASHOUT */
     let rawCashout = Number(line.slice(97, 109)).toString();
     let cashout;
-    if (rawCashout != 0) {
+    if (rawCashout !== 0) {
       cashout =
         rawCashout.slice(0, rawCashout.length - 2) +
         "." +
@@ -79,7 +88,7 @@ export default function toCsv(txt) {
       toPush = toPush.concat(",0");
     }
     /* Push Line */
-    content.push([toPush]);
+    content.push(toPush.split(","));
     // console.log(toPush);
   }
   let result = {
